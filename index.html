@@ -3,68 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BizoDV-Checker</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        #image-container {
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 10px;
-            background-color: white;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    <title>Bizo DV Checker</title>
+    <link rel="stylesheet" href="styles.css"> <!-- ملف CSS لتنسيق الموقع -->
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script> <!-- استيراد مكتبة face-api.js -->
 </head>
 <body>
-    <h1>BizoDV-Checker</h1>
-    <p>قم بتحميل صورة للتحقق منها لمتطلبات تأشيرة التنوع الأمريكية.</p>
-    
-    <input type="file" id="upload" accept="image/*"/>
-    <div id="image-container" style="display: none;">
-        <h2>الصورة المرفوعة:</h2>
-        <img id="uploaded-image" alt="Uploaded Image"/>
+    <div class="container">
+        <h1>Bizo DV Checker</h1>
+        <p>اختبر صورتك للتحقق من مطابقتها للشروط التالية:</p>
+        <ul>
+            <li>يجب أن تكون الصورة ملونة.</li>
+            <li>يجب أن يكون حجم الرأس بين 22 مم و35 مم.</li>
+            <li>يجب أن تكون الصورة ملتقطة خلال الستة أشهر الأخيرة.</li>
+            <li>يجب أن تكون الخلفية بيضاء أو بيضاء فاتحة.</li>
+            <li>يجب أن تكون الصورة ملتقطة من الأمام مباشرة.</li>
+            <li>يجب أن تكون التعبيرات وجه محايد.</li>
+            <li>يجب ارتداء الملابس التي ترتديها يومياً.</li>
+            <li>لا يجب ارتداء قبعات أو أغطية للرأس إلا لأسباب دينية.</li>
+            <li>يجب أن تكون العيون مفتوحة.</li>
+            <li>لا يمكن استخدام النظارات إلا في حالات خاصة.</li>
+        </ul>
+
+        <input type="file" id="imageUpload" accept="image/*" />
+        <button id="checkButton">فحص الصورة</button>
+        <div id="result"></div>
+        <img id="uploadedImage" src="" alt="Uploaded Image" style="display:none;"/>
+
+        <script src="index.js"></script>
     </div>
-
-    <script>
-        const uploadInput = document.getElementById('upload');
-        const imageContainer = document.getElementById('image-container');
-        const uploadedImage = document.getElementById('uploaded-image');
-
-        uploadInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    uploadedImage.src = e.target.result;
-                    imageContainer.style.display = 'block';
-                    // يمكنك هنا إضافة الكود الخاص بالتحقق من الصورة باستخدام face-api.js
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-
-        async function loadModels() {
-            await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-            await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-            await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-            console.log('Models loaded successfully');
-        }
-
-        loadModels();
-    </script>
 </body>
 </html>
-
